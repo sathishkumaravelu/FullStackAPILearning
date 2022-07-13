@@ -1,0 +1,567 @@
+{
+	"info": {
+		"_postman_id": "c3f98d83-7633-48ee-812e-be263410d915",
+		"name": "MAY_22_Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11130692"
+	},
+	"item": [
+		{
+			"name": "Jira",
+			"item": [
+				{
+					"name": "Get All the ISSUES and Total Count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let test_response = pm.response.json();\r",
+									"var total_count = test_response.total;\r",
+									"pm.globals.set(\"total\",test_response.total);\r",
+									"\r",
+									"console.log(\"total count of issues is \"+total_count)\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/rest/api/2/search?jql=project=MAY",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"search"
+							],
+							"query": [
+								{
+									"key": "jql",
+									"value": "project=MAY"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Issues created within last 24 HRS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/rest/api/2/search?jql=project=MAY and created>-2h",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"search"
+							],
+							"query": [
+								{
+									"key": "issues.fields.created",
+									"value": "-24",
+									"disabled": true
+								},
+								{
+									"key": "created <",
+									"value": "-1hrs",
+									"disabled": true
+								},
+								{
+									"key": "jql",
+									"value": "project=MAY and created>-2h"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRINT_First and last description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var length = pm.response.json().issues.length;\r",
+									"\r",
+									"let testresponse=pm.response.json();\r",
+									"var firstDesc = testresponse.issues[0].fields.issuetype.description;\r",
+									"console.log(firstDesc);\r",
+									"\r",
+									"console.log(length);\r",
+									"var lastDesc = testresponse.issues[length-1].fields.issuetype.description;\r",
+									"\r",
+									"console.log(lastDesc);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/rest/api/2/search?jql=project=MAY",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"search"
+							],
+							"query": [
+								{
+									"key": "jql",
+									"value": "project=MAY"
+								},
+								{
+									"key": "issues.fields.created",
+									"value": "-24",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPermissionMethod",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://testleafmay2022.atlassian.net/rest/api/2//mypermissions",
+							"protocol": "https",
+							"host": [
+								"testleafmay2022",
+								"atlassian",
+								"net"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"",
+								"mypermissions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "username",
+						"value": "testleafmay2022@gmail.com",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CreateIssue_Assignment",
+			"item": [
+				{
+					"name": "Create Issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assertion for validating response has key value map\", function(){\r",
+									"//pm.expect(response.json().key).to.match(\"MAY\")\r",
+									"pm.expect(pm.response.json().key).to.include(\"MAY\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let responseTest = pm.response.json();\r",
+									"pm.globals.set(\"issue_ID\",responseTest.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"MAY\"\r\n        },\r\n        \"summary\": \"Creating issue for May 2022 using Post method\",\r\n        \"description\": \"successfully created\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/rest/api/2/issue",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"issue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update the PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"tests[\"response body is empty\"] = (responseBody==null || responseBody.length==0);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Updating the description-test for {{issue_ID}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/rest/api/2/issue/{{issue_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"issue",
+								"{{issue_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/rest/api/2/issue/{{issue_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"issue",
+								"{{issue_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 after deleting\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "testleafmay2022@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/rest/api/2/issue/{{issue_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"issue",
+								"{{issue_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "HIL3ZuKjWVDgLgEgYbFE0C2C",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "testleafmay2022@gmail.com",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "test-itemId",
+			"value": ""
+		}
+	]
+}
